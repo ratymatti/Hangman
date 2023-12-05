@@ -9,12 +9,13 @@ public class Hangman {
         int randomIndex = randomNumber();
         String hiddenWord = StringArrays.words[randomIndex];
 
+        String wrongAnswerString = "";
+
         char[] wordArray = convertToArray(hiddenWord, true); 
         char[] hiddenWordArray = convertToArray(hiddenWord, false);
-        
+        char[] wrongAnswerArray = convertToArray(wrongAnswerString, true);
 
         int wrongAnswerCount = 0;
-        String wrongAnswerString = "";
 
         int lettersHidden = hiddenWord.length();
 
@@ -30,7 +31,7 @@ public class Hangman {
                 printArray(hiddenWordArray);
             }
 
-            char[] wrongAnswerArray = convertToArray(wrongAnswerString, true);
+            
             System.out.print("\n\nMisses: ");
             printArray(wrongAnswerArray);
 
@@ -46,9 +47,22 @@ public class Hangman {
                 break;
             }
 
-            
-            String currentGuess = scanner.nextLine(); // Needs validating
-            char guessChar = currentGuess.charAt(0);
+            char guessChar = ' ';
+
+            while (guessChar == ' ') {
+                try {
+                    String currentGuess = scanner.nextLine().toLowerCase();
+
+                    if (currentGuess.matches("[a-z]")) {
+                        guessChar = currentGuess.charAt(0);
+                    } else {
+                        System.out.print("Invalid input. Please enter a letter: ");
+                    }
+                    
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.print("Invalid input. Please enter a letter: ");
+                }
+            }
 
             int matchesFound = 0;
 
@@ -70,6 +84,11 @@ public class Hangman {
         System.out.println();
         scanner.close();
     }
+
+    /**
+     * Move these functions below
+     * @return
+     */
 
     public static int randomNumber() {
         double randomNumber = Math.random() * StringArrays.words.length;
