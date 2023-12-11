@@ -9,6 +9,7 @@ public class Hangman {
         boolean isPlaying = true; // Program stops when changed to false
 
         int[] usedIndexes = new int[1];
+        
         int gameNumber = 0;
 
         while (isPlaying) {
