@@ -6,16 +6,15 @@ public class Hangman {
     public static void main(String[] args) {
         boolean isPlaying = true;
         Scanner scanner = new Scanner(System.in);
+        
 
         while (isPlaying) {
             int randomIndex = HangmanFunctions.randomNumber();
             String hiddenWord = StringArrays.words[randomIndex];
 
-            String wrongAnswerString = "";
-
             char[] wordArray = HangmanFunctions.convertToArray(hiddenWord, true); 
             char[] hiddenWordArray = HangmanFunctions.convertToArray(hiddenWord, false);
-            char[] wrongAnswerArray = HangmanFunctions.convertToArray(wrongAnswerString, true);
+            String wrongAnswerString = "";
 
             int wrongAnswerCount = 0;
 
@@ -33,7 +32,7 @@ public class Hangman {
                     HangmanFunctions.printArray(hiddenWordArray);
                 }
 
-
+                char[] wrongAnswerArray = HangmanFunctions.convertToArray(wrongAnswerString, true);
                 System.out.print("\n\nMisses: ");
                 HangmanFunctions.printArray(wrongAnswerArray);
 
@@ -83,7 +82,7 @@ public class Hangman {
 
             }
 
-            System.out.print("Want to play again? (yes/no) ");
+            System.out.print("\nWant to play again? (yes/no) ");
 
             while (isPlaying) {
                 String isNewGame = scanner.nextLine().toLowerCase();
@@ -99,9 +98,6 @@ public class Hangman {
             }
         }
 
-        
-
-        System.out.println();
         scanner.close();
     }    
 
