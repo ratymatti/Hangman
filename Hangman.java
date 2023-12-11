@@ -6,14 +6,14 @@ public class Hangman {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        int randomIndex = randomNumber();
+        int randomIndex = HangmanFunctions.randomNumber();
         String hiddenWord = StringArrays.words[randomIndex];
 
         String wrongAnswerString = "";
 
-        char[] wordArray = convertToArray(hiddenWord, true); 
-        char[] hiddenWordArray = convertToArray(hiddenWord, false);
-        char[] wrongAnswerArray = convertToArray(wrongAnswerString, true);
+        char[] wordArray = HangmanFunctions.convertToArray(hiddenWord, true); 
+        char[] hiddenWordArray = HangmanFunctions.convertToArray(hiddenWord, false);
+        char[] wrongAnswerArray = HangmanFunctions.convertToArray(wrongAnswerString, true);
 
         int wrongAnswerCount = 0;
 
@@ -26,14 +26,14 @@ public class Hangman {
             System.out.print("Word: ");
             
             if (wrongAnswerCount == wrongAnswerLimit) {
-                printArray(wordArray);
+                HangmanFunctions.printArray(wordArray);
             } else {
-                printArray(hiddenWordArray);
+                HangmanFunctions.printArray(hiddenWordArray);
             }
 
             
             System.out.print("\n\nMisses: ");
-            printArray(wrongAnswerArray);
+            HangmanFunctions.printArray(wrongAnswerArray);
 
             System.out.print("\n\nGuess: ");
 
@@ -75,7 +75,7 @@ public class Hangman {
             }
             
             if (matchesFound == 0) {
-                wrongAnswerString = updateString(wrongAnswerString, guessChar);
+                wrongAnswerString = HangmanFunctions.updateString(wrongAnswerString, guessChar);
                 wrongAnswerCount++;
             }
 
@@ -83,43 +83,6 @@ public class Hangman {
 
         System.out.println();
         scanner.close();
-    }
-
-    /**
-     * Move these functions below
-     * @return
-     */
-
-    public static int randomNumber() {
-        double randomNumber = Math.random() * StringArrays.words.length;
-        return (int)randomNumber;
-    }
-
-    public static char[] convertToArray(String word, boolean visible) {
-        char[] wordArray = new char[word.length()];
-
-        if (visible) {
-            for (int i = 0; i < word.length(); i++) {
-                wordArray[i] = word.charAt(i);    
-            }
-        } else {
-            for (int i = 0; i < word.length(); i++) {
-                wordArray[i] = '_';
-            }
-        }
-
-        return wordArray;
-    }
-
-    public static void printArray(char[] array) {
-        for (int i = 0; i < array.length; i++) {
-            System.out.print(array[i] + " ");
-        }
-    }
-    
-    public static String updateString(String original, char newLetter) {
-        String newString = original + newLetter;
-        return newString;
-    }
+    }    
 
 }
