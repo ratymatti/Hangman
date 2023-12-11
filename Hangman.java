@@ -4,12 +4,20 @@ public class Hangman {
     private static final int wrongAnswerLimit = 6;
 
     public static void main(String[] args) {
-        boolean isPlaying = true;
         Scanner scanner = new Scanner(System.in);
-        
+
+        boolean isPlaying = true; // Program stops when changed to false
+
+        int[] usedIndexes = new int[1];
+        int gameNumber = 0;
 
         while (isPlaying) {
-            int randomIndex = HangmanFunctions.randomNumber();
+            gameNumber++;
+            
+            int randomIndex = HangmanFunctions.getRandomIndex(usedIndexes, gameNumber);
+
+            usedIndexes = HangmanFunctions.updateIndexTracking(usedIndexes, randomIndex, gameNumber);
+
             String hiddenWord = StringArrays.words[randomIndex];
 
             char[] wordArray = HangmanFunctions.convertToArray(hiddenWord, true); 
@@ -81,6 +89,8 @@ public class Hangman {
                 }
 
             }
+
+            System.out.println("\n" + gameNumber + " games played.\n");
 
             System.out.print("\nWant to play again? (yes/no) ");
 
