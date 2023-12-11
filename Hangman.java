@@ -4,82 +4,102 @@ public class Hangman {
     private static final int wrongAnswerLimit = 6;
 
     public static void main(String[] args) {
+        boolean isPlaying = true;
         Scanner scanner = new Scanner(System.in);
 
-        int randomIndex = HangmanFunctions.randomNumber();
-        String hiddenWord = StringArrays.words[randomIndex];
+        while (isPlaying) {
+            int randomIndex = HangmanFunctions.randomNumber();
+            String hiddenWord = StringArrays.words[randomIndex];
 
-        String wrongAnswerString = "";
+            String wrongAnswerString = "";
 
-        char[] wordArray = HangmanFunctions.convertToArray(hiddenWord, true); 
-        char[] hiddenWordArray = HangmanFunctions.convertToArray(hiddenWord, false);
-        char[] wrongAnswerArray = HangmanFunctions.convertToArray(wrongAnswerString, true);
+            char[] wordArray = HangmanFunctions.convertToArray(hiddenWord, true); 
+            char[] hiddenWordArray = HangmanFunctions.convertToArray(hiddenWord, false);
+            char[] wrongAnswerArray = HangmanFunctions.convertToArray(wrongAnswerString, true);
 
-        int wrongAnswerCount = 0;
+            int wrongAnswerCount = 0;
 
-        int lettersHidden = hiddenWord.length();
+            int lettersHidden = hiddenWord.length();
 
-        while (true) {
+            while (true) {
 
-            System.out.println(StringArrays.gallows[wrongAnswerCount]);
+                System.out.println(StringArrays.gallows[wrongAnswerCount]);
 
-            System.out.print("Word: ");
-            
-            if (wrongAnswerCount == wrongAnswerLimit) {
-                HangmanFunctions.printArray(wordArray);
-            } else {
-                HangmanFunctions.printArray(hiddenWordArray);
-            }
+                System.out.print("Word: ");
 
-            
-            System.out.print("\n\nMisses: ");
-            HangmanFunctions.printArray(wrongAnswerArray);
+                if (wrongAnswerCount == wrongAnswerLimit) {
+                    HangmanFunctions.printArray(wordArray);
+                } else {
+                    HangmanFunctions.printArray(hiddenWordArray);
+                }
 
-            System.out.print("\n\nGuess: ");
 
-            if (lettersHidden == 0) {
-                System.out.println("\n\nYou won!");
-                break;
-            }
-            
-            if (wrongAnswerCount == wrongAnswerLimit) {
-                System.out.println("\n\nYou lose!");
-                break;
-            }
+                System.out.print("\n\nMisses: ");
+                HangmanFunctions.printArray(wrongAnswerArray);
 
-            char guessChar = ' ';
+                System.out.print("\n\nGuess: ");
 
-            while (guessChar == ' ') {
-                try {
-                    String currentGuess = scanner.nextLine().toLowerCase();
+                if (lettersHidden == 0) {
+                    System.out.println("\n\nYou won!");
+                    break;
+                }
 
-                    if (currentGuess.matches("[a-z]")) {
-                        guessChar = currentGuess.charAt(0);
-                    } else {
+                if (wrongAnswerCount == wrongAnswerLimit) {
+                    System.out.println("\n\nYou lose!");
+                    break;
+                }
+
+                char guessChar = ' ';
+
+                while (guessChar == ' ') {
+                    try {
+                        String currentGuess = scanner.nextLine().toLowerCase();
+
+                        if (currentGuess.matches("[a-z]")) {
+                            guessChar = currentGuess.charAt(0);
+                        } else {
+                            System.out.print("Invalid input. Please enter a letter: ");
+                        }
+
+                    } catch (IndexOutOfBoundsException e) {
                         System.out.print("Invalid input. Please enter a letter: ");
                     }
-                    
-                } catch (IndexOutOfBoundsException e) {
-                    System.out.print("Invalid input. Please enter a letter: ");
+                }
+
+                int matchesFound = 0;
+
+                for (int i = 0; i < wordArray.length; i++) {
+                   if (wordArray[i] == guessChar) {
+                        hiddenWordArray[i] = wordArray[i];
+                        matchesFound++;
+                        lettersHidden--;
+                   } 
+                }
+
+                if (matchesFound == 0) {
+                    wrongAnswerString = HangmanFunctions.updateString(wrongAnswerString, guessChar);
+                    wrongAnswerCount++;
+                }
+
+            }
+
+            System.out.print("Want to play again? (yes/no) ");
+
+            while (isPlaying) {
+                String isNewGame = scanner.nextLine().toLowerCase();
+
+                if (isNewGame.equals("no")) {
+                    isPlaying = false;
+                    System.out.println("\nGoodbye!\n");
+                } else if (isNewGame.equals("yes")) {
+                    break;
+                } else {
+                    System.out.print("\nPlease enter 'yes' or 'no': " );
                 }
             }
-
-            int matchesFound = 0;
-
-            for (int i = 0; i < wordArray.length; i++) {
-               if (wordArray[i] == guessChar) {
-                    hiddenWordArray[i] = wordArray[i];
-                    matchesFound++;
-                    lettersHidden--;
-               } 
-            }
-            
-            if (matchesFound == 0) {
-                wrongAnswerString = HangmanFunctions.updateString(wrongAnswerString, guessChar);
-                wrongAnswerCount++;
-            }
-
         }
+
+        
 
         System.out.println();
         scanner.close();
