@@ -16,10 +16,9 @@ public class Hangman {
             gameNumber++;
             
             int randomIndex = HangmanFunctions.getRandomIndex(usedIndexes, gameNumber);
+            String hiddenWord = StringArrays.words[randomIndex];
 
             usedIndexes = HangmanFunctions.updateIndexTracking(usedIndexes, randomIndex, gameNumber);
-
-            String hiddenWord = StringArrays.words[randomIndex];
 
             char[] wordArray = HangmanFunctions.convertToArray(hiddenWord, true); 
             char[] hiddenWordArray = HangmanFunctions.convertToArray(hiddenWord, false);
