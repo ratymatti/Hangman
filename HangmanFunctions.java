@@ -77,13 +77,11 @@ public class HangmanFunctions {
      * @return string
      * 
      * Inside the function:
-     *  1. creates new string based on parameter string original and adds parameter char newLetter to end of it
-     *  2. returns that new string
+     *  1. returns new string based on parameter string original and adds parameter char newLetter to end of it
      */
     
     public static String updateString(String original, char newLetter) {
-        String newString = original + newLetter;
-        return newString;
+        return original + newLetter;
     }
 
     /**
