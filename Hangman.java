@@ -8,17 +8,17 @@ public class Hangman {
 
         boolean isPlaying = true; // Program stops when changed to false
 
-        int[] usedIndexes = new int[1];
+        int[] usedIndexes = new int[0];
         
         int gameNumber = 0;
 
         while (isPlaying) {
             gameNumber++;
             
-            int randomIndex = HangmanFunctions.getRandomIndex(usedIndexes, gameNumber);
+            int randomIndex = HangmanFunctions.getRandomIndex(usedIndexes);
             String hiddenWord = StringArrays.words[randomIndex];
 
-            usedIndexes = HangmanFunctions.updateIndexTracking(usedIndexes, randomIndex, gameNumber);
+            usedIndexes = HangmanFunctions.updateIndexTracking(usedIndexes, randomIndex);
 
             char[] wordArray = HangmanFunctions.convertToArray(hiddenWord, true); 
             char[] hiddenWordArray = HangmanFunctions.convertToArray(hiddenWord, false);

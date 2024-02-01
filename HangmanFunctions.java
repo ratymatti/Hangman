@@ -12,10 +12,10 @@ public class HangmanFunctions {
      *  3. returns that random number
      */
 
-    public static int getRandomIndex(int[] usedIndexes, int gameNumber) {
+    public static int getRandomIndex(int[] usedIndexes) {
         double randomNumber = Math.random() * StringArrays.words.length;
 
-        if (gameNumber > 1) {
+        if (usedIndexes.length > 0) {
             boolean isNotValidIndex = checkIndexes(usedIndexes, (int)randomNumber);
 
             while (isNotValidIndex) {
@@ -123,9 +123,9 @@ public class HangmanFunctions {
      *  4. returns usedIndexes
      */
 
-    public static int[] updateIndexTracking(int[] usedIndexes, int currentRandomIndex, int gameNumber) {
+    public static int[] updateIndexTracking(int[] usedIndexes, int currentRandomIndex) {
 
-        if (gameNumber > 1) {
+        if (usedIndexes.length > 0) {
             int[] newIndexTrackingArray = new int[usedIndexes.length + 1];
 
             for (int i = 0; i < usedIndexes.length; i++) {
@@ -136,9 +136,11 @@ public class HangmanFunctions {
 
             return newIndexTrackingArray;
         } else {
-            usedIndexes[0] = currentRandomIndex;
+            int[] newIndexTrackingArray = new int[usedIndexes.length + 1];
+            
+            newIndexTrackingArray[0] = currentRandomIndex;
 
-            return usedIndexes;
+            return newIndexTrackingArray;
         }
     }
 }
